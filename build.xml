@@ -27,19 +27,19 @@
 **
 **
 -->
-<project name="myPluginName" default="dist" basedir=".">
+<project name="rgisopen" default="dist" basedir=".">
 
     <!-- enter the SVN commit message -->
-    <property name="commit.message" value="Commit message" />
+    <property name="commit.message" value="New plugin, rgisopen" />
     <!-- enter the *lowest* JOSM version this plugin is currently compatible with -->
-    <property name="plugin.main.version" value="" />
+    <property name="plugin.main.version" value="3400" />
 
 
     <!--
       ************************************************
       ** should not be necessary to change the following properties
      -->
-    <property name="josm"                   location="../../core/dist/josm-custom.jar"/>
+    <property name="josm"                   location="../../josm-latest.jar"/>
     <property name="plugin.build.dir"       value="build"/>
     <property name="plugin.src.dir"         value="src"/>
     <!-- this is the directory where the plugin jar is copied to -->
@@ -64,7 +64,7 @@
     -->
     <target name="compile" depends="init">
         <echo message="compiling sources for  ${plugin.jar} ... "/>
-        <javac srcdir="src" classpath="${josm}" debug="true" destdir="${plugin.build.dir}">
+        <javac srcdir="src" classpath="${josm};../../dist/piclayer.jar" debug="true" destdir="${plugin.build.dir}">
             <compilerarg value="-Xlint:deprecation"/>
             <compilerarg value="-Xlint:unchecked"/>
         </javac>
@@ -99,14 +99,15 @@
         ************************************************
     -->
             <manifest>
-                <attribute name="Author" value="..."/>
-                <attribute name="Plugin-Class" value="..."/>
+                <attribute name="Author" value="Ilya Zverev"/>
+                <attribute name="Plugin-Class" value="rgisopen.RGISOpenPlugin"/>
                 <attribute name="Plugin-Date" value="${version.entry.commit.date}"/>
-                <attribute name="Plugin-Description" value="..."/>
-                <attribute name="Plugin-Icon" value="..."/>
-                <attribute name="Plugin-Link" value="..."/>
+                <attribute name="Plugin-Description" value="Use rgis.spb.ru image as overlay"/>
+                <attribute name="Plugin-Icon" value="images/rgisicon.png"/>
+                <attribute name="Plugin-Link" value="http://rgis.spb.ru/map/"/>
                 <attribute name="Plugin-Mainversion" value="${plugin.main.version}"/>
                 <attribute name="Plugin-Version" value="${version.entry.commit.revision}"/>
+		<attribute name="Plugin-Requires" value="PicLayer"/>
             </manifest>
         </jar>
     </target>
